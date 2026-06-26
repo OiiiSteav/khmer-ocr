@@ -60,13 +60,32 @@ try {
 Write-Host "`nPushing to GitHub (main branch)..." -ForegroundColor Yellow
 Write-Host "Note: If this is your first time, a Windows dialog will pop up asking you to sign into GitHub." -ForegroundColor Cyan
 
-try {
-    git push -u origin main
+# Run standard push
+git push -u origin main
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "`nStandard push failed." -ForegroundColor Yellow
+    Write-Host "This usually happens because you previously uploaded files via the web browser, causing a history mismatch." -ForegroundColor White
+    $Choice = Read-Host -Prompt "Would you like to FORCE push to overwrite the remote history with your local files? (y/n)"
+    
+    if ($Choice -eq "y" -or $Choice -eq "Y") {
+        Write-Host "`nForce pushing to GitHub..." -ForegroundColor Yellow
+        git push -u origin main --force
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "`n===============================================" -ForegroundColor Green
+            Write-Host "  Success! Your code has been pushed to GitHub." -ForegroundColor Green
+            Write-Host "===============================================" -ForegroundColor Green
+        } else {
+            Write-Host "`nForce push failed. Please check your internet connection or GitHub permissions." -ForegroundColor Red
+        }
+    } else {
+        Write-Host "`nPush cancelled. Your local files were committed but not uploaded." -ForegroundColor Gray
+    }
+} else {
     Write-Host "`n===============================================" -ForegroundColor Green
     Write-Host "  Success! Your code has been pushed to GitHub." -ForegroundColor Green
     Write-Host "===============================================" -ForegroundColor Green
-} catch {
-    Write-Host "`nFailed to push to GitHub. Please check your internet connection or GitHub permissions." -ForegroundColor Red
 }
 
 Write-Host "`nPress any key to exit..."
