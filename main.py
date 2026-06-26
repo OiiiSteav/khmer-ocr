@@ -322,22 +322,27 @@ def main():
     # This prevents coordinates mismatch on 4K/high-res screens
     os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
     
-    # Automatically generate a high-quality Windows ICO file from logo.png on startup
-    # This ensures the custom branded icon is available for the desktop shortcut
+    # Automatically generate/update the Windows ICO file from logo.png on startup
+    # If the PNG logo is newer than the ICO icon (or if the ICO is missing), it is regenerated
     base_dir = os.path.dirname(os.path.abspath(__file__))
     logo_path = os.path.join(base_dir, "logo.png")
-    ico_path = os.path.join(base_dir, "logo.ico")
-    if os.path.exists(logo_path) and not os.path.exists(ico_path):
-        try:
-            from PIL import Image as PILImage
-            img = PILImage.open(logo_path)
-            img.save(
-                ico_path, 
-                format="ICO", 
-                sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
-            )
-        except Exception:
-            pass
+    ico_path = os.path.join(base_dir, "logo_v2.ico")
+    if os.path.exists(logo_path):
+        if not os.path.exists(ico_path) or os.path.getmtime(logo_path) > os.path.getmtime(ico_path):
+            try:
+                from PIL import Image as PILImage
+                img = PILImage.open(logo_path)
+                img.save(
+                    ico_path, 
+                    format="ICO", 
+                    sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
+                )
+                # Programmatically notify the Windows Shell to clear and rebuild the icon cache globally
+                if sys.platform == "win32":
+                    import ctypes
+                    ctypes.windll.shell32.SHChangeNotify(0x08000000, 0x0000, None, None)
+            except Exception:
+                pass
     
     app = QApplication(sys.argv)
     

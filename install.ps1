@@ -188,8 +188,8 @@ try {
     Write-Host "Dependencies successfully installed." -ForegroundColor Green
     
     # Generate custom Windows ICO file during installation
-    Write-Host "Generating custom Windows icon (logo.ico)..." -ForegroundColor Yellow
-    Start-Process ".\venv\Scripts\python.exe" -ArgumentList "-c `"from PIL import Image; Image.open('logo.png').save('logo.ico', format='ICO')`"" -Wait -NoNewWindow
+    Write-Host "Generating custom Windows icon (logo_v2.ico)..." -ForegroundColor Yellow
+    Start-Process ".\venv\Scripts\python.exe" -ArgumentList "-c `"from PIL import Image; Image.open('logo.png').save('logo_v2.ico', format='ICO')`"" -Wait -NoNewWindow
 } catch {
     Write-Host "Failed to set up Python virtual environment or install dependencies: $_" -ForegroundColor Red
     exit
@@ -210,7 +210,7 @@ try {
     $Shortcut.TargetPath = $TargetPath
     $Shortcut.Arguments = $Arguments
     $Shortcut.WorkingDirectory = $TargetDir
-    $Shortcut.IconLocation = "$TargetDir\logo.ico" # Assign custom branded icon
+    $Shortcut.IconLocation = "$TargetDir\logo_v2.ico" # Assign custom branded icon
     $Shortcut.Description = "Offline Khmer OCR Reader"
     $Shortcut.Save()
     
@@ -220,7 +220,7 @@ try {
     $StartupShortcut.TargetPath = $TargetPath
     $StartupShortcut.Arguments = $Arguments
     $StartupShortcut.WorkingDirectory = $TargetDir
-    $StartupShortcut.IconLocation = "$TargetDir\logo.ico" # Assign custom branded icon
+    $StartupShortcut.IconLocation = "$TargetDir\logo_v2.ico" # Assign custom branded icon
     $Shortcut.Description = "Offline Khmer OCR Reader Startup"
     $StartupShortcut.Save()
     
