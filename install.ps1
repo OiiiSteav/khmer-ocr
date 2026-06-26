@@ -186,6 +186,10 @@ try {
     Start-Process ".\venv\Scripts\python.exe" -ArgumentList "-m pip install --upgrade pip" -Wait -NoNewWindow
     Start-Process ".\venv\Scripts\pip.exe" -ArgumentList "install -r requirements.txt" -Wait -NoNewWindow
     Write-Host "Dependencies successfully installed." -ForegroundColor Green
+    
+    # Generate custom Windows ICO file during installation
+    Write-Host "Generating custom Windows icon (logo.ico)..." -ForegroundColor Yellow
+    Start-Process ".\venv\Scripts\python.exe" -ArgumentList "-c `"from PIL import Image; Image.open('logo.png').save('logo.ico', format='ICO')`"" -Wait -NoNewWindow
 } catch {
     Write-Host "Failed to set up Python virtual environment or install dependencies: $_" -ForegroundColor Red
     exit
@@ -199,7 +203,6 @@ try {
     # Run target uses 'pythonw.exe' (windowless Python) so no console window is visible
     $TargetPath = "$TargetDir\venv\Scripts\pythonw.exe"
     $Arguments = "`"$TargetDir\main.py`""
-    $IconPath = "$TesseractDefaultPath\tesseract.exe" # Use system icon or default
     
     # 1. Desktop Shortcut
     $DesktopShortcutPath = "$env:USERPROFILE\Desktop\Khmer OCR.lnk"
@@ -207,6 +210,7 @@ try {
     $Shortcut.TargetPath = $TargetPath
     $Shortcut.Arguments = $Arguments
     $Shortcut.WorkingDirectory = $TargetDir
+    $Shortcut.IconLocation = "$TargetDir\logo.ico" # Assign custom branded icon
     $Shortcut.Description = "Offline Khmer OCR Reader"
     $Shortcut.Save()
     
@@ -216,7 +220,8 @@ try {
     $StartupShortcut.TargetPath = $TargetPath
     $StartupShortcut.Arguments = $Arguments
     $StartupShortcut.WorkingDirectory = $TargetDir
-    $StartupShortcut.Description = "Offline Khmer OCR Reader Startup"
+    $StartupShortcut.IconLocation = "$TargetDir\logo.ico" # Assign custom branded icon
+    $Shortcut.Description = "Offline Khmer OCR Reader Startup"
     $StartupShortcut.Save()
     
     Write-Host "Shortcuts created on Desktop and in Windows Startup folder." -ForegroundColor Green

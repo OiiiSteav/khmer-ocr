@@ -52,8 +52,9 @@ class OCRWorker(QThread):
             img_pass_a = scaled_img
             
             # --- Pass B: Binarized + Line-Erase Pipeline (Optimized for Bold, Underlines, Strikethroughs, Highlights) ---
-            # Threshold binarization converts gray/highlight backgrounds to pure white, erasing highlights.
-            threshold = 127
+            # Softer threshold binarization (185) preserves thin strokes like parentheses '( )' and diacritics 
+            # while still turning gray highlight backgrounds to pure white.
+            threshold = 185
             binarized_img = scaled_img.point(lambda p: 255 if p > threshold else 0)
             
             # Erase underlines and strikethroughs to prevent characters from being glued together
