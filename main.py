@@ -108,7 +108,13 @@ class KhmerOCRApp(QObject):
         QTimer.singleShot(5000, self.updater.start)
 
     def _create_stylish_icon(self) -> QIcon:
-        """Generates a high-fidelity tray icon programmatically (no external file needed)."""
+        """Loads the custom designed logo if available; otherwise falls back to a generated icon."""
+        logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo.png")
+        if os.path.exists(logo_path):
+            logger.info(f"Loading custom logo from: {logo_path}")
+            return QIcon(logo_path)
+            
+        logger.info("Custom logo.png not found. Falling back to generated icon.")
         pixmap = QPixmap(64, 64)
         pixmap.fill(Qt.GlobalColor.transparent)
         

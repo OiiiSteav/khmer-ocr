@@ -50,7 +50,7 @@ def get_tesseract_path() -> str:
         return "tesseract"  # Rely on system PATH for Unix/macOS
 
 TESSERACT_CMD = get_tesseract_path()
-OCR_LANG = "khm"
+OCR_LANG = "khm+eng"
 
 # Hotkey Configuration (Win + Shift + K)
 # Windows Modifiers:
