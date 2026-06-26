@@ -37,7 +37,7 @@ def find_tessdata_dir(tesseract_cmd):
 def run_command(cmd, shell=False):
     print(f"Executing: {' '.join(cmd) if isinstance(cmd, list) else cmd}")
     try:
-        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=shell)
+        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8", shell=shell)
         return result.stdout, result.stderr
     except subprocess.CalledProcessError as e:
         print(f"Error executing command: {e}")

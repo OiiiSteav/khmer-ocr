@@ -101,6 +101,13 @@ def generate_box_and_tif(font_path, corpus_lines, output_base):
             tess_right = cx2
             tess_top = total_height - cy1
             
+            # Ensure the bounding box has a width and height of at least 1 pixel.
+            # Tesseract rejects 0-width or 0-height boxes (e.g., combining vowels/diacritics) and exits with code 1.
+            if tess_right <= tess_left:
+                tess_right = tess_left + 1
+            if tess_top <= tess_bottom:
+                tess_top = tess_bottom + 1
+                
             box_entries.append(f"{char} {tess_left} {tess_bottom} {tess_right} {tess_top} 0")
             
             # Move X coordinate forward by the width of this character
