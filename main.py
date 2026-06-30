@@ -294,10 +294,9 @@ class KhmerOCRApp(QObject):
     def restart_application(self):
         """Cleanly restarts the application to load updated files."""
         logger.info("Restarting application...")
-        self.hotkey_listener.stop()
-        self.tray_icon.hide()
-        # Restart the python process
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        import subprocess
+        subprocess.Popen([sys.executable] + sys.argv)
+        self.exit_application()
 
     @pyqtSlot()
     def exit_application(self):

@@ -79,10 +79,12 @@ class SelectionOverlay(QWidget):
                 # Get the device pixel ratio for the screen to handle DPI scaling correctly with mss
                 dpr = self.screen.devicePixelRatio()
                 
+                # Get the physical origin of this screen
+                phys_x, phys_y = get_screen_physical_origin(self.screen)
+                
                 # Convert to global physical coordinates
-                screen_origin = self.geometry().topLeft()
-                global_x = int((screen_origin.x() + selection_rect.x()) * dpr)
-                global_y = int((screen_origin.y() + selection_rect.y()) * dpr)
+                global_x = int(phys_x + selection_rect.x() * dpr)
+                global_y = int(phys_y + selection_rect.y() * dpr)
                 global_w = int(selection_rect.width() * dpr)
                 global_h = int(selection_rect.height() * dpr)
                 
@@ -201,3 +203,60 @@ class OverlayManager(QObject):
                 overlay.close()
                 overlay.deleteLater()
             self.overlays.clear()
+
+
+def get_screen_physical_origin(screen) -> tuple[int, int]:
+    """
+    Finds the physical origin (left, top) of the given QScreen by matching it
+    with the monitors detected by mss.
+    """
+    import mss
+    from PyQt6.QtGui import QGuiApplication
+    
+    try:
+        qt_screens = QGuiApplication.screens()
+        with mss.mss() as sct:
+            mss_monitors = sct.monitors[1:] # Exclude virtual monitor at index 0
+            
+        if len(qt_screens) == 1 or len(mss_monitors) == 1:
+            if mss_monitors:
+                return mss_monitors[0]['left'], mss_monitors[0]['top']
+            return 0, 0
+
+        # Group by physical size
+        qt_groups = {}
+        for s in qt_screens:
+            dpr = s.devicePixelRatio()
+            w = round(s.geometry().width() * dpr)
+            h = round(s.geometry().height() * dpr)
+            qt_groups.setdefault((w, h), []).append(s)
+            
+        mss_groups = {}
+        for m in mss_monitors:
+            w = m['width']
+            h = m['height']
+            mss_groups.setdefault((w, h), []).append(m)
+            
+        target_dpr = screen.devicePixelRatio()
+        target_w = round(screen.geometry().width() * target_dpr)
+        target_h = round(screen.geometry().height() * target_dpr)
+        
+        group_key = (target_w, target_h)
+        if group_key in qt_groups and group_key in mss_groups:
+            s_list = qt_groups[group_key]
+            m_list = mss_groups[group_key]
+            
+            # Sort consistently by geometry to pair them up correctly
+            s_list.sort(key=lambda s: (s.geometry().x(), s.geometry().y()))
+            m_list.sort(key=lambda m: (m['left'], m['top']))
+            
+            if screen in s_list:
+                idx = s_list.index(screen)
+                if idx < len(m_list):
+                    return m_list[idx]['left'], m_list[idx]['top']
+    except Exception as e:
+        logger.warning(f"Error matching QScreen to mss monitor: {e}")
+        
+    # Fallback
+    target_dpr = screen.devicePixelRatio()
+    return int(screen.geometry().x() * target_dpr), int(screen.geometry().y() * target_dpr)

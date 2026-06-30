@@ -61,6 +61,53 @@ def reorder_khmer_vowels(text: str) -> str:
         i += 1
     return "".join(chars)
 
+def normalize_khmer_vowels(text: str) -> str:
+    """
+    Normalizes decomposed Khmer Unicode vowels into their canonical single-character forms.
+    This fixes cases where Tesseract or visual fonts decompose vowels into multiple characters.
+    """
+    # េ (U+17C1) + ី (U+17B8) -> ើ (U+17BE)
+    text = text.replace('\u17C1\u17B8', '\u17BE')
+    # េ (U+17C1) + ា (U+17B6) -> ោ (U+17C4)
+    text = text.replace('\u17C1\u17B6', '\u17C4')
+    # េ (U+17C1) + េ (U+17C1) -> ែ (U+17C2)
+    text = text.replace('\u17C1\u17C1', '\u17C2')
+    return text
+
+def correct_khmer_ocr_errors(text: str) -> str:
+    """
+    Corrects common Khmer OCR misrecognitions (Samyok Sanya, dependent vowels, independent vowels).
+    Uses a combination of regex-based systematic corrections and dictionary-based replacements.
+    """
+    import re
+    
+    # 1. Systematic correction: ព៌ (Po + Reahmuk) is always a mistake for ព័ (Po + Samyok Sanya)
+    text = re.sub(r'ព៌', 'ព័', text)
+    
+    # 2. Dictionary of common word/phrase OCR misrecognitions
+    replacements = {
+        "ប្រកេចញ": "ច្រកចេញ",
+        "ថ្លាក់ឃ្នំ": "ថ្នាក់ឃុំ",
+        "ថ្លាក់ឃុំ": "ថ្នាក់ឃុំ",
+        "ព៌ត៌មាន": "ព័ត៌មាន",
+        "ព៌តមាន": "ព័ត៌មាន",
+        "ព័តមាន": "ព័ត៌មាន",
+        "ប្រព៌ន្ធ": "ប្រព័ន្ធ",
+        "ប្រពន្ធ័": "ប្រព័ន្ធ",
+        "ប្រព័ន្ឋ": "ប្រព័ន្ធ",
+        "រដ្ធបាល": "រដ្ឋបាល",
+        "សងកាត់": "សង្កាត់",
+    }
+    
+    for src, dst in replacements.items():
+        text = text.replace(src, dst)
+        
+    # 3. Context-aware correction: ក្រូម -> ក្រុម
+    # Replace "ក្រូម" with "ក្រុម" unless it's preceded by "ហ្គូហ្គល" or "Google" (Google Chrome)
+    text = re.sub(r'(?<!ហ្គូហ្គល)(?<!ហ្គូហ្គល )(?<!Google )ក្រូម', 'ក្រុម', text)
+    
+    return text
+
 class OCRWorker(QThread):
     """
     A QThread worker to perform offline OCR using Tesseract in the background
@@ -76,7 +123,7 @@ class OCRWorker(QThread):
     def run(self):
         logger.info("OCR worker thread started with Three-Pass Formatting-Aware Ensemble.")
         try:
-            from PIL import ImageOps, ImageStat, Image
+            from PIL import ImageOps, ImageStat
             
             # --- Common Preprocessing Stage ---
             # 1. Convert to grayscale to remove color noise and highlight backgrounds
@@ -173,9 +220,11 @@ class OCRWorker(QThread):
                 
             logger.info(f"Selecting {selected_pass} with confidence {best_conf:.1f}%")
             
-            # Final cleanup, vowel reordering, and emit
-            final_text = reorder_khmer_vowels(best_text.strip())
-            self.finished.emit(final_text)
+            # Final cleanup, vowel reordering, normalization, error correction, and emit
+            ordered_text = reorder_khmer_vowels(best_text.strip())
+            normalized_text = normalize_khmer_vowels(ordered_text)
+            corrected_text = correct_khmer_ocr_errors(normalized_text)
+            self.finished.emit(corrected_text)
             
         except pytesseract.TesseractNotFoundError:
             err_msg = (
@@ -286,36 +335,3 @@ class OCRWorker(QThread):
         except Exception as e:
             logger.error(f"Error in confidence-based OCR pass: {e}")
             return "", 0.0
-            
-            # Clean up the output text
-            cleaned_text = text.strip()
-            
-            logger.info(f"OCR complete. Characters recognized: {len(cleaned_text)}")
-            self.finished.emit(cleaned_text)
-            
-        except pytesseract.TesseractNotFoundError:
-            err_msg = (
-                f"Tesseract executable not found at: '{config.TESSERACT_CMD}'.\n"
-                "Please make sure Tesseract is installed and the path in config.py is correct."
-            )
-            logger.error(err_msg)
-            self.error.emit(err_msg)
-            
-        except pytesseract.TesseractError as te:
-            err_msg = str(te)
-            # If the error is due to missing language pack
-            if "Error opening data file" in err_msg or config.OCR_LANG not in err_msg:
-                err_msg = (
-                    f"Tesseract failed. The '{config.OCR_LANG}' language pack might be missing.\n"
-                    f"Please download '{config.OCR_LANG}.traineddata' and place it in your Tesseract 'tessdata' folder.\n\n"
-                    f"Details: {err_msg}"
-                )
-            else:
-                err_msg = f"Tesseract OCR Error: {err_msg}"
-            logger.error(err_msg)
-            self.error.emit(err_msg)
-            
-        except Exception as e:
-            err_msg = f"An unexpected error occurred during OCR: {str(e)}"
-            logger.exception(err_msg)
-            self.error.emit(err_msg)

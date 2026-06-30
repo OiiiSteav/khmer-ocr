@@ -204,6 +204,7 @@ try {
     # Run target uses 'pythonw.exe' (windowless Python) so no console window is visible
     $TargetPath = "$TargetDir\venv\Scripts\pythonw.exe"
     $Arguments = "`"$TargetDir\main.py`""
+    $IconPath = "$TesseractDefaultPath\tesseract.exe" # Use system icon or default
     
     # 1. Desktop Shortcut
     $DesktopShortcutPath = "$env:USERPROFILE\Desktop\Khmer OCR.lnk"
@@ -222,7 +223,7 @@ try {
     $StartupShortcut.Arguments = $Arguments
     $StartupShortcut.WorkingDirectory = $TargetDir
     $StartupShortcut.IconLocation = "$TargetDir\logo_v5.ico" # Assign custom branded icon
-    $Shortcut.Description = "Offline Khmer OCR Reader Startup"
+    $StartupShortcut.Description = "Offline Khmer OCR Reader Startup"
     $StartupShortcut.Save()
     
     Write-Host "Shortcuts created on Desktop and in Windows Startup folder." -ForegroundColor Green
