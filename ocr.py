@@ -97,6 +97,11 @@ def correct_khmer_ocr_errors(text: str) -> str:
         "ប្រព័ន្ឋ": "ប្រព័ន្ធ",
         "រដ្ធបាល": "រដ្ឋបាល",
         "សងកាត់": "សង្កាត់",
+        "សនើយ៍": "សេនីយ៍",
+        "ម៉ងេ": "ម៉េង",
+        "ម៉ងតេុង": "ម៉េងតុង",
+        "ម៉ងតុង": "ម៉េងតុង",
+        "សម្របសម្រល": "សម្របសម្រួល",
     }
     
     for src, dst in replacements.items():
@@ -105,6 +110,10 @@ def correct_khmer_ocr_errors(text: str) -> str:
     # 3. Context-aware correction: ក្រូម -> ក្រុម
     # Replace "ក្រូម" with "ក្រុម" unless it's preceded by "ហ្គូហ្គល" or "Google" (Google Chrome)
     text = re.sub(r'(?<!ហ្គូហ្គល)(?<!ហ្គូហ្គល )(?<!Google )ក្រូម', 'ក្រុម', text)
+    
+    # 4. Standalone word correction: ប្រស -> ប្រុស (avoiding matching prefixes like ប្រសិន, ប្រសាសន៍, ប្រសើរ)
+    # Matches "ប្រស" only if not surrounded by any Khmer letters (U+1780 to U+17D3)
+    text = re.sub(r'(?<![\u1780-\u17D3])ប្រស(?![\u1780-\u17D3])', 'ប្រុស', text)
     
     return text
 
