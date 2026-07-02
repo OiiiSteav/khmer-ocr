@@ -194,3 +194,77 @@
 2026-06-25 11:47:07,814 [INFO] KhmerOCR.OCR: Running pytesseract with lang='khm'...
 2026-06-25 11:47:07,966 [INFO] KhmerOCR.OCR: OCR complete. Characters recognized: 23
 2026-06-25 11:47:07,983 [INFO] KhmerOCR.Main: Successfully copied recognized text to clipboard.
+2026-06-30 13:52:15,477 [INFO] KhmerOCR.OCR: Kiri OCR library successfully imported.
+2026-06-30 13:52:15,557 [INFO] KhmerOCR.OCR: Seanghay's Khmer Normalizer successfully imported.
+2026-06-30 13:52:15,696 [INFO] KhmerOCR.Main: Loading custom logo from: C:\Users\R3AY\Desktop\khmer_ocr_app\logo.png
+2026-06-30 13:52:15,796 [INFO] KhmerOCR.Main: Application initialized and running in system tray.
+2026-06-30 13:52:15,798 [INFO] KhmerOCR.Hotkey: Starting cross-platform hotkey listener thread...
+2026-06-30 13:52:15,810 [INFO] KhmerOCR.Hotkey: Global hotkey registered: <cmd>+<shift>+k
+2026-06-30 13:52:20,797 [INFO] KhmerOCR.Updater: Auto-updater thread started.
+2026-06-30 13:52:20,798 [INFO] KhmerOCR.Updater: Checking remote version at: https://raw.githubusercontent.com/OiiiSteav/khmer-ocr/main/version.txt
+2026-06-30 13:52:21,246 [INFO] KhmerOCR.Updater: Local version: 1.2.0 | Remote version: 1.2.0
+2026-06-30 13:52:21,247 [INFO] KhmerOCR.Updater: Application is up to date.
+2026-06-30 13:52:21,248 [INFO] KhmerOCR.Main: No update needed.
+2026-06-30 14:12:41,280 [INFO] KhmerOCR.OCR: Kiri OCR library successfully imported.
+2026-06-30 14:12:41,382 [INFO] KhmerOCR.OCR: Seanghay's Khmer Normalizer successfully imported.
+2026-06-30 14:12:41,420 [INFO] KhmerOCR.Main: Loading custom logo from: C:\Users\R3AY\Desktop\khmer_ocr_app\logo.png
+2026-06-30 14:12:41,452 [INFO] KhmerOCR.Main: Application initialized and running in system tray.
+2026-06-30 14:12:41,455 [INFO] KhmerOCR.Hotkey: Starting cross-platform hotkey listener thread...
+2026-06-30 14:12:41,474 [INFO] KhmerOCR.Hotkey: Global hotkey registered: <cmd>+<shift>+k
+2026-06-30 14:12:46,453 [INFO] KhmerOCR.Updater: Auto-updater thread started.
+2026-06-30 14:12:46,453 [INFO] KhmerOCR.Updater: Checking remote version at: https://raw.githubusercontent.com/OiiiSteav/khmer-ocr/main/version.txt
+2026-06-30 14:12:46,608 [INFO] KhmerOCR.Updater: Local version: 1.2.0 | Remote version: 1.2.0
+2026-06-30 14:12:46,609 [INFO] KhmerOCR.Updater: Application is up to date.
+2026-06-30 14:12:46,609 [INFO] KhmerOCR.Main: No update needed.
+2026-07-02 09:16:59,033 [INFO] KhmerOCR.OCR: Kiri OCR library successfully imported.
+2026-07-02 09:16:59,108 [INFO] KhmerOCR.OCR: Seanghay's Khmer Normalizer successfully imported.
+2026-07-02 09:16:59,172 [INFO] KhmerOCR.Main: Loading custom logo from: C:\Users\R3AY\Desktop\khmer_ocr_app\logo.png
+2026-07-02 09:16:59,222 [INFO] KhmerOCR.Main: Application initialized and running in system tray.
+2026-07-02 09:16:59,243 [INFO] KhmerOCR.Hotkey: Starting cross-platform hotkey listener thread...
+2026-07-02 09:16:59,258 [INFO] KhmerOCR.Hotkey: Global hotkey registered: <cmd>+<shift>+k
+2026-07-02 09:17:04,259 [INFO] KhmerOCR.Updater: Auto-updater thread started.
+2026-07-02 09:17:04,260 [INFO] KhmerOCR.Updater: Checking remote version at: https://raw.githubusercontent.com/OiiiSteav/khmer-ocr/main/version.txt
+2026-07-02 09:17:04,930 [INFO] KhmerOCR.Updater: Local version: 1.2.0 | Remote version: 1.2.0
+2026-07-02 09:17:04,930 [INFO] KhmerOCR.Updater: Application is up to date.
+2026-07-02 09:17:04,933 [INFO] KhmerOCR.Main: No update needed.
+2026-07-02 09:18:12,883 [INFO] KhmerOCR.Main: Exiting application...
+2026-07-02 09:18:12,883 [INFO] KhmerOCR.Hotkey: Stopping hotkey listener...
+2026-07-02 09:18:12,883 [INFO] KhmerOCR.Hotkey: Hotkey listener thread stopped.
+2026-07-02 09:18:15,606 [INFO] KhmerOCR.OCR: Kiri OCR library successfully imported.
+2026-07-02 09:18:15,681 [INFO] KhmerOCR.OCR: Seanghay's Khmer Normalizer successfully imported.
+2026-07-02 09:18:15,705 [INFO] KhmerOCR.Main: Loading custom logo from: C:\Users\R3AY\Desktop\khmer_ocr_app\logo.png
+2026-07-02 09:18:15,737 [INFO] KhmerOCR.Main: Application initialized and running in system tray.
+2026-07-02 09:18:15,756 [INFO] KhmerOCR.Hotkey: Starting cross-platform hotkey listener thread...
+2026-07-02 09:18:15,767 [INFO] KhmerOCR.Hotkey: Global hotkey registered: <cmd>+<shift>+k
+2026-07-02 09:18:20,756 [INFO] KhmerOCR.Updater: Auto-updater thread started.
+2026-07-02 09:18:20,756 [INFO] KhmerOCR.Updater: Checking remote version at: https://raw.githubusercontent.com/OiiiSteav/khmer-ocr/main/version.txt
+2026-07-02 09:18:20,919 [INFO] KhmerOCR.Updater: Local version: 1.2.0 | Remote version: 1.2.0
+2026-07-02 09:18:20,920 [INFO] KhmerOCR.Updater: Application is up to date.
+2026-07-02 09:18:20,920 [INFO] KhmerOCR.Main: No update needed.
+2026-07-02 09:18:31,251 [INFO] KhmerOCR.Main: Starting screen selection flow.
+2026-07-02 09:18:31,253 [INFO] KhmerOCR.Overlay: Spawning selection overlays across 1 screen(s).
+2026-07-02 09:18:35,332 [INFO] KhmerOCR.Overlay: Selection completed: local=PyQt6.QtCore.QRect(1251, 614, 385, 260), global_physical=(1251, 614, 385, 260), dpr=1.0
+2026-07-02 09:18:35,333 [INFO] KhmerOCR.Overlay: Closing all active overlays.
+2026-07-02 09:18:35,343 [INFO] KhmerOCR.Main: Overlay selection received: 1251, 614, 385, 260. Starting capture and OCR.
+2026-07-02 09:18:35,343 [INFO] KhmerOCR.Capture: Capturing screen region: left=1251, top=614, width=385, height=260
+2026-07-02 09:18:35,380 [INFO] KhmerOCR.Capture: Saved debug capture to C:\Users\R3AY\Desktop\khmer_ocr_app\logs\debug_capture.png
+2026-07-02 09:18:35,380 [INFO] KhmerOCR.Capture: Screen region successfully captured.
+2026-07-02 09:18:35,399 [INFO] KhmerOCR.OCR: OCR worker thread started.
+2026-07-02 09:18:35,400 [INFO] KhmerOCR.OCR: Running Tesseract Three-Pass Parallel OCR Ensemble...
+2026-07-02 09:18:35,404 [INFO] KhmerOCR.OCR: Dark background/highlight detected (avg: 42.6). Inverting image.
+2026-07-02 09:18:35,406 [INFO] KhmerOCR.OCR: Image height 260px is small. Scaling up by 1.15x to 300px.
+2026-07-02 09:18:35,407 [INFO] KhmerOCR.OCR: Adaptive thresholding: mean brightness=212.4, selected threshold=180
+2026-07-02 09:18:35,420 [INFO] KhmerOCR.OCR: Orchestrating Three-Pass Parallel OCR Ensemble...
+2026-07-02 09:18:35,421 [INFO] KhmerOCR.OCR: Starting Pass A (Standard) in background thread...
+2026-07-02 09:18:35,421 [INFO] KhmerOCR.OCR: Starting Pass B (Line Erase) in background thread...
+2026-07-02 09:18:35,421 [INFO] KhmerOCR.OCR: Starting Pass C (Deslanted) in background thread...
+2026-07-02 09:18:37,573 [INFO] KhmerOCR.OCR: Pass A (Standard) Conf: 0.0% | '...'
+2026-07-02 09:18:37,573 [INFO] KhmerOCR.OCR: Pass B (Line Erase) Conf: 35.1% | 'July
+ittpsv//www.fac...'
+2026-07-02 09:18:37,573 [INFO] KhmerOCR.OCR: Pass C (Deslanted) Conf: 23.7% | 'July 1
+hretpsv/wwfac...'
+2026-07-02 09:18:37,573 [INFO] KhmerOCR.OCR: Selecting Pass B (Line Erase) with confidence 35.1%
+2026-07-02 09:18:37,574 [INFO] KhmerOCR.OCR: Using Seanghay's Khmer Normalizer...
+2026-07-02 09:18:37,591 [INFO] KhmerOCR.OCR: Loaded 22309 words into Khmer dictionary.
+2026-07-02 09:18:37,767 [INFO] KhmerOCR.OCR: OCR complete. Characters recognized: 196
+2026-07-02 09:18:37,771 [INFO] KhmerOCR.Main: Successfully copied recognized text to clipboard.

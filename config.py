@@ -50,7 +50,7 @@ def get_tesseract_path() -> str:
         return "tesseract"  # Rely on system PATH for Unix/macOS
 
 TESSERACT_CMD = get_tesseract_path()
-OCR_LANG = "khm"
+OCR_LANG = "eng+khm"
 
 # Hotkey Configuration (Win + Shift + K)
 # Windows Modifiers:
@@ -64,7 +64,6 @@ HOTKEY_ID = 1                        # Unique ID for the hotkey registration
 
 # OCR Engine Configuration
 # Available options:
-# 1. "kiri-ocr" (Highly accurate deep learning-based OCR specifically for English and Khmer)
-#    Note: Requires an internet connection on the first run to download ONNX models (~100MB).
-# 2. "tesseract" (Classic offline OCR using a 3-pass parallel ensemble)
-OCR_ENGINE = "kiri-ocr"
+# 1. "tesseract" (Classic offline OCR using a 3-pass parallel ensemble) - Recommended & Fast
+# 2. "kiri-ocr" (Deep learning-based OCR)
+OCR_ENGINE = "tesseract"
